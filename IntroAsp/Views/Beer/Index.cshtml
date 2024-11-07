@@ -1,0 +1,61 @@
+﻿@model List<Beer>
+<h1>Cervezas</h1>
+@if(TempData["AlertMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["AlertMessage"]
+                </div>
+            }
+<p>
+    
+    <a asp-controller="Beer"
+       asp-action="Create"
+       class="btn btn-success">
+        Crear
+    </a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var beer in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => beer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => beer.Brand.Name)
+                </td>
+                <td>
+                    <a asp-controller="Beer"
+                       asp-action="Edit"
+                       asp-route-id="@beer.BeerId"
+                       class="btn btn-primary">
+                        Editar
+                    </a>
+                    <a asp-controller="Beer"
+                       asp-action="Delete"
+                        asp-route-id="@beer.BeerId"
+                       onclick="return confirmar()"
+                       class="btn btn-danger">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        function confirmar() {
+            return confirm("¿Esta seguro de eliminar la cerveza?")
+        }
+    </script>
+}
